@@ -23,7 +23,6 @@ Usage
 * Your score will be displayed and updated after every guess.
 
 
-Certainly! Here's an example of a README for a Pokémon quiz game built using JavaScript:
 
 Pokémon Quiz Game (JavaScript)
 Welcome to the Pokémon Quiz Game, a web-based game built using HTML, CSS, and JavaScript. Test your knowledge of Pokémon with this interactive quiz!
