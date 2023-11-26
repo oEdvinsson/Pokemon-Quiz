@@ -7,9 +7,6 @@ const score = document.getElementById('score');
 const highScore = document.getElementById('highScore');
 const whatPokemon = document.getElementById('whatPokemon');
 
-
-
-
 const array = [];
 for (let i = 1; i <= 151; i++) {
   array.push(i);
@@ -27,6 +24,7 @@ for (let i = 0; i < button.length; i++) {
   button[i].addEventListener('click', guess)
 };
 
+// Fetches array of original 151 pokémons
 fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
   .then(response => {
     if (!response.ok) {
@@ -41,11 +39,11 @@ fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
     console.error('Fetch error:', error);
   });
 
+
 async function newPokemon(newPokemon) {
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${newPokemon}/`);
   const data = await response.json();
   image.src = data.sprites.front_default;
-  console.log(data.name)
   const number = Math.floor(Math.random()* 3);
 
   button[number].textContent = data.name;
@@ -57,25 +55,21 @@ async function newPokemon(newPokemon) {
   whatPokemon.textContent = 'What pokémon is this?';
 };
 
+
 function guess(e) {
   // Disables buttons
   for (let i = 0; i < button.length; i++) {
     button[i].disabled = true;
  };
-  const clickedPokemon = e.target.textContent.toLowerCase();
-  const imgSrc = img.src.toLowerCase();
-  console.log(img.src);
 
-  const foundPokemon = pokemons.find(pokemon => imgSrc.includes(pokemon.toLowerCase()));
-  
-  if (foundPokemon && foundPokemon.toLowerCase() === clickedPokemon) {
+  if ((pokemonData.indexOf(e.target.textContent) + 1) === shuffled[counter]) {
     console.log('Correct!');
-    whatPokemon.textContent = `Correct! it's a ${clickedPokemon}`;
+    whatPokemon.textContent = `Correct! It´s a ${pokemonData[shuffled[counter]-1]}`;
     playerScore++;
     score.textContent = playerScore;
   } else {
     console.log('Wrong answer');
-    whatPokemon.textContent = `Wrong! it's a ${foundPokemon}`;
+    whatPokemon.textContent = `Wrong! It´s a ${pokemonData[shuffled[counter]-1]}`;
     score.textContent = 0;
     if (playerScore > playerHighScore) {
       localStorage.setItem("playerHighScore", playerScore);
@@ -90,34 +84,12 @@ function guess(e) {
       counter++;
       newPokemon(shuffled[counter]);
   }, 1500);
-  console.log(pokemons)
 }
 
 
 newPokemon(shuffled[counter]);
 
-// function newPokemon() {
-  // Disables buttons
 
- 
-//  let newPokemon = fetchPokemon(pokemon);
-
-//  console.log(newPokemon);
-
-
-
-  // setTimeout(() => {
-  //   for (let i = 0; i < button.length; i++) {
-  //     button[i].disabled = false;
-  //  };
-  //     const shuffled = pokemons.sort(() => Math.random() - 0.5);
-  //     button[0].textContent = shuffled[0];
-  //     button[1].textContent = shuffled[1];
-  //     button[2].textContent = shuffled[2];
-  //     const chosenPokemon = Math.floor(Math.random()* 3);
-  //     image.src = `${shuffled[chosenPokemon]}.jpg`;
-  //     whatPokemon.textContent = 'What pokémon is this?';
-  // }, 1500);
 
 
 
